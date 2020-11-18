@@ -125,4 +125,42 @@ router.post(
   }
 );
 
+//@type     DELETE
+//@route    /api/questions/delete/:id
+//@desc     route for deleting a single question
+//@access   PRIVATE
+router.delete(
+  "/delete/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Question.findOneAndRemove({ _id: req.params.id })
+      .then(() => {
+        res.json({ success: "Successfully deleted" });
+      })
+      .catch((err) => console.log(`ERROR in deleting a question : ${err}`));
+  }
+);
+
+//@type     DELETE
+//@route    /api/questions/deleteall/
+//@desc     route for deleting all questions of particular user
+//@access   PRIVATE
+router.delete(
+  "/deleteall",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Question.deleteMany({ user: req.user.id })
+      .then(() => {
+        res.json({
+          success: "Successfully deleted all questions for " + req.user.name,
+        });
+      })
+      .catch((err) =>
+        console.log(
+          `Unable to delete all questions for ${req.user.name}: ${err}`
+        )
+      );
+  }
+);
+
 module.exports = router;
