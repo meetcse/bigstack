@@ -1,0 +1,4 @@
+This folder is for security check before the route is called.
+
+securities like :- 
+sql injection, etc.

@@ -1,0 +1,1 @@
+This file is for basic setup or GLOBAL Strings like api link etc.
